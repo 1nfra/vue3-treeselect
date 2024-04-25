@@ -6577,14 +6577,10 @@ var instanceId = 0;
     matchKeys: function matchKeys() {
       this.initialize();
     },
-    modelValue: {
-      deep: true,
-      handler: function handler() {
-        var nodeIdsFromValue = this.extractCheckedNodeIdsFromValue();
-        var hasChanged = quickDiff(nodeIdsFromValue, this.internalValue);
-        if (!hasChanged) return;
-        this.fixSelectedNodeIds(nodeIdsFromValue);
-      }
+    value: function value() {
+      var nodeIdsFromValue = this.extractCheckedNodeIdsFromValue();
+      var hasChanged = quickDiff(nodeIdsFromValue, this.internalValue);
+      if (hasChanged) this.fixSelectedNodeIds(nodeIdsFromValue);
     },
     multiple: function multiple(newValue) {
       // We need to rebuild the state when switching from single-select mode
@@ -8592,11 +8588,19 @@ var Option = {
     }
   },
   methods: {
-    renderSuffix: function renderSuffix() {
+    renderPrefix: function renderPrefix() {
       var instance = this.instance,
         node = this.node;
-      var optionSuffix = instance.$slots['suffix'];
-      return optionSuffix ? optionSuffix({
+      var optionPrefix = instance.$slots['prefix'];
+      return optionPrefix ? optionPrefix({
+        node: node
+      }) : null;
+    },
+    renderPostfix: function renderPostfix() {
+      var instance = this.instance,
+        node = this.node;
+      var optionPostfix = instance.$slots['postfix'];
+      return optionPostfix ? optionPostfix({
         node: node
       }) : null;
     },
@@ -8616,7 +8620,7 @@ var Option = {
         "class": optionClass,
         "onMouseenter": this.handleMouseEnterOption,
         "data-id": node.id
-      }, [this.renderArrow(), this.renderLabelContainer([this.renderCheckboxContainer([this.renderCheckbox()]), this.renderLabel(), this.renderSuffix()])]);
+      }, [this.renderArrow(), this.renderLabelContainer([this.renderCheckboxContainer([this.renderCheckbox()]), this.renderPrefix(), this.renderLabel(), this.renderPostfix()])]);
     },
     renderSubOptionsList: function renderSubOptionsList() {
       var h = this.$createElement;

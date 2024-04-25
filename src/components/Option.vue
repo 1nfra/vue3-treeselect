@@ -31,12 +31,21 @@
     },
 
     methods: {
-      renderSuffix() {
+      renderPrefix() {
         const { instance, node } = this
-        const optionSuffix = instance.$slots['suffix']
+        const optionPrefix = instance.$slots['prefix']
 
-        return optionSuffix
-          ? optionSuffix({ node })
+        return optionPrefix
+          ? optionPrefix({ node })
+          : null
+      },
+
+      renderPostfix() {
+        const { instance, node } = this
+        const optionPostfix = instance.$slots['postfix']
+
+        return optionPostfix
+          ? optionPostfix({ node })
           : null
       },
 
@@ -58,8 +67,9 @@
               this.renderCheckboxContainer([
                 this.renderCheckbox(),
               ]),
+              this.renderPrefix(),
               this.renderLabel(),
-              this.renderSuffix(),
+              this.renderPostfix(),
             ])}
           </div>
         )
