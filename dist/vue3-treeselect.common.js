@@ -6568,10 +6568,14 @@ var instanceId = 0;
     matchKeys: function matchKeys() {
       this.initialize();
     },
-    value: function value() {
-      var nodeIdsFromValue = this.extractCheckedNodeIdsFromValue();
-      var hasChanged = quickDiff(nodeIdsFromValue, this.internalValue);
-      if (hasChanged) this.fixSelectedNodeIds(nodeIdsFromValue);
+    modelValue: {
+      deep: true,
+      handler: function handler() {
+        var nodeIdsFromValue = this.extractCheckedNodeIdsFromValue();
+        var hasChanged = quickDiff(nodeIdsFromValue, this.internalValue);
+        if (!hasChanged) return;
+        this.fixSelectedNodeIds(nodeIdsFromValue);
+      }
     },
     multiple: function multiple(newValue) {
       // We need to rebuild the state when switching from single-select mode
