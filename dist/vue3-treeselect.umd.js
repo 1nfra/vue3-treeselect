@@ -7970,13 +7970,8 @@ const Input_exports_ = Inputvue_type_script_lang_js;
   render: function render() {
     var h = arguments[0];
     var instance = this.instance;
-    var placeholderClass = {
-      'vue-treeselect__placeholder': true,
-      'vue-treeselect-helper-zoom-effect-off': true,
-      'vue-treeselect-helper-hide': instance.hasValue || instance.trigger.searchQuery
-    };
     return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("div", {
-      "class": placeholderClass
+      "class": 'vue-treeselect__placeholder'
     }, [instance.placeholder]);
   }
 });
